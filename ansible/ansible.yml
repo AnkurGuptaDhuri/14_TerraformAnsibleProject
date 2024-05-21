@@ -6,10 +6,9 @@
 
   tasks:
   - name: Install the nginx in EC2 - amazon linux
-      yum:
-        name: nginx
-        state: present
+    command: yum install nginx
   - name: Start NGiNX
-      service:
-        name: nginx
-        state: started
+    command: yum install nginx
+      # service:
+      #  name: nginx
+      #  state: started
