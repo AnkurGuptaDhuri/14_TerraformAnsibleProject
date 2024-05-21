@@ -45,7 +45,7 @@ resource "aws_instance" "ta_ec2" {
   provisioner "remote-exec" {
     inline = [ "sleep 30 | sudo hostnamectl set-hostname cloudEc2.technox.com" ]
     connection {
-      host        = aws_instance.ta_ec2_instance_ip
+      host        = self.public_ip #aws_instance.ta_ec2_instance_ip
       type        = "ssh"
       user        = "ec2-user"
       private_key = file("/var/mykeys/sshkey-RSA.pem")
