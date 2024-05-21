@@ -1,9 +1,9 @@
 ---
 - name: Install nginx
-  hosts: all
+  hosts: webserver
   become: true
 
-
+  tasks:
   - name: Install nginx
     yum:
       name: nginx
