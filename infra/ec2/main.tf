@@ -37,29 +37,31 @@ resource "aws_instance" "ta_ec2" {
     http_endpoint = "enabled"  # Enable the IMDSv2 endpoint
     http_tokens   = "required" # Require the use of IMDSv2 tokens
   }
-/*
-  # to write remote provisioner
+  # to write remote provisioner - it's important else local exec will fail because that doesnot wait for vm to create
   provisioner "remote-exec" {
-    inline = [ "sudo hostnamectl set-hostname cloudEc2.technox.com" ]
+    inline = [ "sleep 30 | sudo hostnamectl set-hostname cloudEc2.technox.com" ]
     connection {
       host        = aws_instance.ta_ec2public_dns
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("../../AWSPractice/ec2-keypair.pem")
+      private_key = file("/var/mykeys/sshkey-RSA.pem")
     }
   }
-*/
+
   # to write local provisioner ## command to save the public dns of ec2 in inventory file.
   provisioner "local-exec" {
-    command = "echo ${self.public_dns} > ../ansible/inventory"
+    #command = "echo ${self.public_dns} > ../ansible/inventory"
+    command = "echo ${self.public_ip} > ../ansible/inventory"
+    
   }
-/*
+
   provisioner "local-exec" {
-      command = "ansible-playbook ../ansible/ansible.yml"
+      command = "ansible-playbook -i ../ansible/inventory -u ec2-user --private-key /var/mykeys/sshkey-RSA.pem ../ansible/ansible.yml"
+                #ansible-playbook -i inventory -u ec2-user --private-key /var/mykeys/sshkey-RSA.pem ansible.yml
     #command = "ansible all -m shell -a 'yum -y install httpd; systemctl restart httpd'"
   }
 
-*/
+
   # to write local provisioner for ansible.yml
 
 
