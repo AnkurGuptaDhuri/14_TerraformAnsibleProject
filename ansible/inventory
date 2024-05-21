@@ -1,1 +1,2 @@
-51.20.128.222
+[webserver]
+ansible_host=51.20.128.222

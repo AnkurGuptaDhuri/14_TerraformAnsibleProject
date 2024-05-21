@@ -3,7 +3,7 @@
   host: all
   become: true
   become_method: sudo
-  
+
   tasks:
     - name: Install the nginx in EC2 - amazon linux
       yum:
