@@ -43,7 +43,7 @@ resource "aws_instance" "ta_ec2" {
   }
   # to write remote provisioner - it's important else local exec will fail because that doesnot wait for vm to create
   provisioner "remote-exec" {
-    inline = [ "sleep 30 | sudo hostnamectl set-hostname cloudEc2.technox.com" ]
+    inline = [ "sudo hostnamectl set-hostname cloudEc2.technox.com" ]
     connection {
       host        = self.public_ip #aws_instance.ta_ec2_instance_ip
       type        = "ssh"
