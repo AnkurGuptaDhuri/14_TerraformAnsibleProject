@@ -3,8 +3,13 @@
   host: all
   become: true
   become_method: sudo
-
+  
   tasks:
-    -name: Install the nginx in EC2 - amazon linux
-     command: yum install nginx -y
-
+    - name: Install the nginx in EC2 - amazon linux
+      yum:
+        name: nginx
+        state: present
+    - name: Start NGiNX
+      service:
+        name: nginx
+        state: started
