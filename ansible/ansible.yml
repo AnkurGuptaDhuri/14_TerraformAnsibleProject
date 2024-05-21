@@ -1,15 +1,15 @@
 ---
 - name: To configure the newly created EC2 with terraform
-  host: all
+  hosts: all
   #become: true
   #become_method: sudo
 
   tasks:
-    - name: Install the nginx in EC2 - amazon linux
+  - name: Install the nginx in EC2 - amazon linux
       yum:
         name: nginx
         state: present
-    - name: Start NGiNX
+  - name: Start NGiNX
       service:
         name: nginx
         state: started
