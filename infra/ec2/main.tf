@@ -16,6 +16,10 @@ output "ta_ec2_instance_id" {
   value = aws_instance.ta_ec2.id
 }
 
+output "ta_ec2_instance_ip" {
+  value = aws_instance.ta_ec2.public_ip
+}
+
 output "ta_ec2_instance_dns" {
   value = aws_instance.ta_ec2.public_dns
 }
@@ -41,7 +45,7 @@ resource "aws_instance" "ta_ec2" {
   provisioner "remote-exec" {
     inline = [ "sleep 30 | sudo hostnamectl set-hostname cloudEc2.technox.com" ]
     connection {
-      host        = aws_instance.ta_ec2public_dns
+      host        = aws_instance.ta_ec2_instance_ip
       type        = "ssh"
       user        = "ec2-user"
       private_key = file("/var/mykeys/sshkey-RSA.pem")
@@ -67,10 +71,3 @@ resource "aws_instance" "ta_ec2" {
 
 
 }
-
-/*
-resource "aws_key_pair" "ta_public_key" {
-  key_name   = "aws_key"
-  public_key = var.public_key
-}
-*/
